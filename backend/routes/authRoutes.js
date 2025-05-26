@@ -1,6 +1,7 @@
 import {Router} from "express"
 import { protect } from "../middlewares/authMiddleware.js"
 import { registerUser, loginUser, getUserProfile, updateUserProfile } from "../controllers/authController.js"
+import { upload } from "../middlewares/uploadMiddleware.js"
 const router = Router()
 
 // Auth Routes
