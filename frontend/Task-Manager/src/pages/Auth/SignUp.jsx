@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout";
 import { validateEmail } from "../../utils/helper";
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector"
 import Input from "../../components/Inputs/input";
 import { Link , useNavigate} from "react-router-dom";
+import { axiosInstance } from "../../utils/axiosInstance.js";
+import { API_PATHS } from "../../utils/apiPaths.js";
+import { UserContext } from "../../context/userContext.jsx";
+import { uploadImage } from "../../utils/uploadImage.js";
+
 const SignUp = () =>{
     const [profilePic, setProfilePic] = useState(null)
     const [fullName, setFullName] = useState("")
@@ -12,7 +17,9 @@ const SignUp = () =>{
     const [adminInviteToken, setAdminInviteToken] = useState("")
     const [error, setError] = useState(null);
 
+    const {updateUser}  = useContext(UserContext);
     const navigate = useNavigate();
+
         // Handle SignUp form submit
         const handleSignUp = async (e) => {
             e.preventDefault();
@@ -34,7 +41,40 @@ const SignUp = () =>{
             setError("");
     
             // SignUp API call
-        }
+            try {
+
+                if(profilePic){
+                    const imguploadRes = await uploadImage(profilePic);
+                    profileImageUrl = imguploadRes.imageUrl || "";
+                }
+                const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+                    name : fullName,
+                    email,
+                    password,
+                    adminInviteToken
+                });
+
+                const { token, role } = response.data;
+                if(token){
+                    localStorage.setItem("token", token);
+                    updateUser(response.data);
+
+                    // Redirect based on role
+                    if(role === "admin"){
+                        navigate("/admin/dashboard");
+                    }
+                    else{
+                        navigate("/user/dashboard");
+                    }
+                }
+            } catch (error) {
+                if(error.response && error.response.data.message){
+                    setError(error.response.data.message);
+                }else{
+                    setError("SOmething went wrong. Please try again.")
+                }
+            }
+        };
 
     return (
         <AuthLayout>

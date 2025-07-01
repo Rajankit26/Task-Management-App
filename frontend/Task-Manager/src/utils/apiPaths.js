@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8000";
+export const BASE_URL = "http://localhost:5000";
 
 // utils/apiPaths.js
 export const API_PATHS = {
@@ -9,7 +9,7 @@ export const API_PATHS = {
     },
 
     USERS: {
-        GET_ALL_USERS: "",
+        GET_ALL_USERS: "/api/users",
         GET_USER_bY_ID: (userId) => `/api/users/${userId}`, // Get user by userId
         CREATE_USER: "/api/users", // ctreate a new user (Admin Only)
         UPDATE_USER:  (userId) => `/api/users/${userId}`, //Update user details
