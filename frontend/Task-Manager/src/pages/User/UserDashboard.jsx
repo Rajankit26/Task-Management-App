@@ -1,9 +1,8 @@
 import React from "react";
 
-const UserDashboard = () =>{
+export const UserDashboard = () =>{
+    useUserAuth();
     return (
         <div>UserDashboard</div>
     )
 }
-
-export default UserDashboard;

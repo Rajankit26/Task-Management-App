@@ -7,11 +7,11 @@ import {BrowserRouter as Router,
   Navigate
 } from "react-router-dom"
 import Login from "./pages/Auth/Login"
-import Dashboard from "./pages/Admin/Dashboard"
+import {Dashboard} from "./pages/Admin/Dashboard.jsx"
 import ManageTask from "./pages/Admin/ManageTasks"
 import CreateTask from "./pages/Admin/CreateTask"
 import ManageUsers from "./pages/Admin/ManageUsers"
-import UserDashboard from "./pages/User/UserDashboard"
+import {UserDashboard} from "./pages/User/UserDashboard.jsx"
 import MyTasks from "./pages/User/MyTasks"
 import ViewTaskDetails from "./pages/User/ViewTaskDetails"
 import PrivateRoute from "./routes/PrivateRoutes"
